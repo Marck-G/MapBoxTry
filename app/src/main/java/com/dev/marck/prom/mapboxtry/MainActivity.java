@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.dev.marck.prom.mapboxtry.MapResources.Places;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.IconFactory;
 import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
@@ -35,22 +36,34 @@ public class MainActivity extends AppCompatActivity {
                 .tilt( 0 )
                 .bearing( 0 )
                 .build();
-        MarkerOptions p = new MarkerOptions().position( Places.IKASTOLA );
-        MarkerOptions eliza = new MarkerOptions().position( Places.ELIZA );
+        MarkerOptions p = new MarkerOptions().position( Places.IKASTOLA ).setIcon( IconFactory.getInstance( MainActivity.this ).fromResource( R.mipmap.ic_mk_red ));
+        MarkerOptions eliza = new MarkerOptions().position( Places.ELIZA ).setIcon( IconFactory.getInstance( MainActivity.this ).fromResource( R.mipmap.ic_mk_red ));
         mapView.getMapAsync(
                 new OnMapReadyCallback() {
                     @Override
                     public void onMapReady( @NonNull MapboxMap mapboxMap ) {
 //                        Cargamos el estilo del mapa
                         mapboxMap.setStyle( new Style.Builder().fromUrl( getString( R.string.map_style_url ) ) );
+                        mapboxMap.getUiSettings().setZoomGesturesEnabled(false);
+                        mapboxMap.getUiSettings().setLogoEnabled( false );
+                        mapboxMap.getUiSettings().setScrollGesturesEnabled( false );
+                        mapboxMap.getUiSettings().setCompassEnabled( false );
+                        mapboxMap.getUiSettings().setRotateGesturesEnabled( false );
+                        mapboxMap.getGesturesManager().removeMoveGestureListener();
                         mapboxMap.addMarker( p );
                         mapboxMap.addMarker( eliza );
-                        mapboxMap.addMarker( new MarkerOptions().position( Places.TREN ) );
-                        mapboxMap.addMarker( new MarkerOptions().position( Places.ST_CRUZ ) );
-                        mapboxMap.addMarker( new MarkerOptions().position( Places.ZERAMIKA ) );
-                        mapboxMap.addMarker( new MarkerOptions().position( Places.JAUREGIA ) );
-                        mapboxMap.addMarker( new MarkerOptions().position( Places.DORRETXEA ) );
-                        mapboxMap.addMarker( new MarkerOptions().position( Places.PARKE ) );
+                        mapboxMap.addMarker( new MarkerOptions().position( Places.TREN )
+                            .setIcon( IconFactory.getInstance( MainActivity.this ).fromResource( R.mipmap.ic_mk_green ) )).setTitle( "Tren Geltokia" );
+                        mapboxMap.addMarker( new MarkerOptions().position( Places.ST_CRUZ )
+                                .setIcon( IconFactory.getInstance( MainActivity.this ).fromResource( R.mipmap.ic_mk_green ))).setTitle( "Santa Cruz" );
+                        mapboxMap.addMarker( new MarkerOptions().position( Places.ZERAMIKA )
+                                .setIcon( IconFactory.getInstance( MainActivity.this ).fromResource( R.mipmap.ic_mk_red )).setTitle( "Zeramika Lantegia" ) ).showInfoWindow( mapboxMap,mapView );
+                        mapboxMap.addMarker( new MarkerOptions().position( Places.JAUREGIA )
+                                .setIcon( IconFactory.getInstance( MainActivity.this ).fromResource( R.mipmap.ic_mk_red )));
+                        mapboxMap.addMarker( new MarkerOptions().position( Places.DORRETXEA )
+                                .setIcon( IconFactory.getInstance( MainActivity.this ).fromResource( R.mipmap.ic_mk_red )));
+                        mapboxMap.addMarker( new MarkerOptions().position( Places.PARKE )
+                                .setIcon( IconFactory.getInstance( MainActivity.this ).fromResource( R.mipmap.ic_mk_red )));
                         mapboxMap.animateCamera( CameraUpdateFactory.newCameraPosition(init), 300 );
 
                     }
