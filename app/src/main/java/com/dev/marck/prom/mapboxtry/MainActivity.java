@@ -5,6 +5,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dev.marck.prom.mapboxtry.MapResources.Places;
@@ -25,7 +26,9 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout btn_hasi;
     private ConstraintLayout btn_atera;
     private TextView title;
+    private ConstraintLayout pointViewHub;
     private boolean isPointView = false;
+    private ImageView btn_back;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -36,12 +39,6 @@ public class MainActivity extends AppCompatActivity {
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
 //        posicionamiento de camara
-        CameraPosition init = new CameraPosition.Builder()
-                .target( Places.LLODIO)
-                .zoom( 14 )
-                .tilt( 0 )
-                .bearing( 0 )
-                .build();
         MarkerOptions p = new MarkerOptions().position( Places.IKASTOLA ).setIcon( IconFactory.getInstance( MainActivity.this ).fromResource( R.mipmap.ic_marker_x  ));
         MarkerOptions eliza = new MarkerOptions().position( Places.ELIZA ).setIcon( IconFactory.getInstance( MainActivity.this ).fromResource( R.mipmap.ic_marker_x  ));
         mapView.getMapAsync(
@@ -71,14 +68,24 @@ public class MainActivity extends AppCompatActivity {
                                 .setIcon( IconFactory.getInstance( MainActivity.this ).fromResource( R.mipmap.ic_marker_v  )));
                         mapboxMap.addMarker( new MarkerOptions().position( Places.PARKE )
                                 .setIcon( IconFactory.getInstance( MainActivity.this ).fromResource(  R.mipmap.ic_marker_x )));
-                        mapboxMap.animateCamera( CameraUpdateFactory.newCameraPosition(init), 300 );
 
                     }
                 }
         );
+
         title = findViewById( R.id.main_title );
+        pointViewHub = findViewById( R.id.point_view_controllers );
         btn_hasi = findViewById( R.id.btn_jaraitu );
         btn_atera = findViewById( R.id.btn_atera );
+        btn_back = findViewById( R.id.btn_back );
+        setOnePointView( isPointView );
+        btn_back.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
+                onBackPressed();
+            }
+        } );
+
         btn_atera.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick( View v ) {
@@ -92,15 +99,34 @@ public class MainActivity extends AppCompatActivity {
                 viewPoint( Places.IKASTOLA, "Ikastola" );
             }
         } );
+        restoreCamera();
+    }
+//    establecemos la posicion por defecto de la camara
+    private void restoreCamera(){
+        title.setText( "Llodio" );
+        mapView.getMapAsync( new OnMapReadyCallback() {
+            @Override
+            public void onMapReady( @NonNull MapboxMap mapboxMap ) {
+                CameraPosition position = new CameraPosition.Builder()
+                        .target( Places.LLODIO )
+                        .zoom( 14 )
+                        .tilt( 0 )
+                        .bearing( 0 )
+                        .build();
+                mapboxMap.animateCamera( CameraUpdateFactory.newCameraPosition( position ),500 );
+            }
+        } );
     }
 
     private void setOnePointView( boolean set ){
         if ( set ){
             btn_hasi.setVisibility( View.INVISIBLE );
             btn_atera.setVisibility( View.INVISIBLE );
+            pointViewHub.setVisibility( View.VISIBLE );
         } else {
             btn_hasi.setVisibility( View.VISIBLE );
             btn_atera.setVisibility( View.VISIBLE );
+            pointViewHub.setVisibility( View.INVISIBLE );
         }
         isPointView = set;
     }
@@ -123,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if( isPointView ){
-            viewPoint( Places.LLODIO, "Llodio" );
+            restoreCamera();
             setOnePointView( false );
         }else{
             finish();
