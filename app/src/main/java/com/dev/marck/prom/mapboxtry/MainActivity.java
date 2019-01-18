@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout btn_hasi;
     private ConstraintLayout btn_atera;
     private TextView title;
+    private boolean isPointView = false;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -101,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
             btn_hasi.setVisibility( View.VISIBLE );
             btn_atera.setVisibility( View.VISIBLE );
         }
+        isPointView = set;
     }
 
 //    hace zoom sobre un punto especifico
@@ -116,6 +118,16 @@ public class MainActivity extends AppCompatActivity {
                 mapboxMap.animateCamera( CameraUpdateFactory.newCameraPosition( position ),500 );
             }
         } );
+    }
+
+    @Override
+    public void onBackPressed() {
+        if( isPointView ){
+            viewPoint( Places.LLODIO, "Llodio" );
+            setOnePointView( false );
+        }else{
+            finish();
+        }
     }
 
     @Override
