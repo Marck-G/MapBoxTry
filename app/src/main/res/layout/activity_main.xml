@@ -190,14 +190,13 @@
             android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:src="@mipmap/ic_btn_back"
             mapbox:layout_constraintBottom_toBottomOf="parent"
             mapbox:layout_constraintStart_toStartOf="parent"
             mapbox:layout_constraintTop_toTopOf="parent"
-            mapbox:layout_constraintVertical_bias="0.85" />
+            mapbox:layout_constraintVertical_bias="0.71000004" />
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/btn_continuar"

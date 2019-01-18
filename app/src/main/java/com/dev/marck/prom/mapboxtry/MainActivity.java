@@ -1,5 +1,6 @@
 package com.dev.marck.prom.mapboxtry;
 
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -122,11 +123,25 @@ public class MainActivity extends AppCompatActivity {
         if ( set ){
             btn_hasi.setVisibility( View.INVISIBLE );
             btn_atera.setVisibility( View.INVISIBLE );
-            pointViewHub.setVisibility( View.VISIBLE );
+            new Handler().postDelayed( new Runnable() {
+                @Override
+                public void run() {
+
+                    pointViewHub.setVisibility( View.VISIBLE );
+                }
+            }, 500 );
+
         } else {
-            btn_hasi.setVisibility( View.VISIBLE );
-            btn_atera.setVisibility( View.VISIBLE );
             pointViewHub.setVisibility( View.INVISIBLE );
+            new Handler().postDelayed( new Runnable() {
+                @Override
+                public void run() {
+                    btn_hasi.setVisibility( View.VISIBLE );
+                    btn_atera.setVisibility( View.VISIBLE );
+
+                }
+            }, 500 );
+
         }
         isPointView = set;
     }
