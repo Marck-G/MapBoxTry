@@ -5,16 +5,13 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dev.marck.prom.mapboxtry.MapResources.Places;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.IconFactory;
-import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
-import com.mapbox.mapboxsdk.camera.CameraUpdate;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
@@ -25,6 +22,9 @@ import com.mapbox.mapboxsdk.maps.Style;
 public class MainActivity extends AppCompatActivity {
 //    mapa de mapbox
     private MapView mapView;
+    private ConstraintLayout btn_hasi;
+    private ConstraintLayout btn_atera;
+    private TextView title;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -75,27 +75,37 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
-
-        ConstraintLayout lay = findViewById( R.id.btn_jaraitu );
-        ConstraintLayout atera = findViewById( R.id.btn_atera );
-        atera.setOnClickListener( new View.OnClickListener() {
+        title = findViewById( R.id.main_title );
+        btn_hasi = findViewById( R.id.btn_jaraitu );
+        btn_atera = findViewById( R.id.btn_atera );
+        btn_atera.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick( View v ) {
                 finish();
             }
         } );
-        lay.setOnClickListener( new View.OnClickListener() {
+        btn_hasi.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick( View v ) {
-                lay.setVisibility( View.INVISIBLE );
-                atera.setVisibility( View.INVISIBLE );
-                viewPoint( Places.IKASTOLA );
+                setOnePointView( true );
+                viewPoint( Places.IKASTOLA, "Ikastola" );
             }
         } );
     }
 
-//    quita los botones y la interfaz principal y hace zoom sobre un
-    private void viewPoint( LatLng pos ){
+    private void setOnePointView( boolean set ){
+        if ( set ){
+            btn_hasi.setVisibility( View.INVISIBLE );
+            btn_atera.setVisibility( View.INVISIBLE );
+        } else {
+            btn_hasi.setVisibility( View.VISIBLE );
+            btn_atera.setVisibility( View.VISIBLE );
+        }
+    }
+
+//    hace zoom sobre un punto especifico
+    private void viewPoint( LatLng pos, String name ){
+        title.setText( name );
         mapView.getMapAsync( new OnMapReadyCallback() {
             @Override
             public void onMapReady( @NonNull MapboxMap mapboxMap ) {
