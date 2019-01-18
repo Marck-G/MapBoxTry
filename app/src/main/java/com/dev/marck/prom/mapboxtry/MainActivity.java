@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private MapView mapView;
     private ConstraintLayout btn_hasi;
     private ConstraintLayout btn_atera;
+    private ConstraintLayout btn_reiniciar;
+    private ConstraintLayout btn_continuar;
     private TextView title;
     private ConstraintLayout pointViewHub;
     private boolean isPointView = false;
@@ -79,11 +81,27 @@ public class MainActivity extends AppCompatActivity {
         btn_hasi = findViewById( R.id.btn_jaraitu );
         btn_atera = findViewById( R.id.btn_atera );
         btn_back = findViewById( R.id.btn_back );
+        btn_continuar = findViewById( R.id.btn_continuar );
+        btn_reiniciar = findViewById( R.id.btn_reiniciar );
         setOnePointView( isPointView );
         btn_back.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick( View v ) {
                 onBackPressed();
+            }
+        } );
+
+        btn_reiniciar.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
+                reiniciar();
+            }
+        } );
+
+        btn_continuar.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
+                continuar();
             }
         } );
 
@@ -93,11 +111,12 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         } );
+
         btn_hasi.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick( View v ) {
                 setOnePointView( true );
-                viewPoint( Places.IKASTOLA, "Ikastola" );
+                viewPoint( Places.DORRETXEA );
             }
         } );
         restoreCamera();
@@ -117,6 +136,16 @@ public class MainActivity extends AppCompatActivity {
                 mapboxMap.animateCamera( CameraUpdateFactory.newCameraPosition( position ),500 );
             }
         } );
+    }
+
+    private void reiniciar(){
+//        TODO: crear una nueva partida, se inicia desde cero
+//        Intent --> primera actividad
+    }
+
+    private void continuar(){
+//        TODO: continua desde el ultimo punto
+//        intent --> ActivityManager.init( int id )
     }
 
     private void setOnePointView( boolean set ){
@@ -147,7 +176,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 //    hace zoom sobre un punto especifico
-    private void viewPoint( LatLng pos, String name ){
+    private void viewPoint( LatLng pos ){
+        String name = Places.getName( pos );
         title.setText( name );
         mapView.getMapAsync( new OnMapReadyCallback() {
             @Override
