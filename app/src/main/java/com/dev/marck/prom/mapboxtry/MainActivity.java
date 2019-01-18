@@ -6,6 +6,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         btn_back = findViewById( R.id.btn_back );
         btn_continuar = findViewById( R.id.btn_continuar );
         btn_reiniciar = findViewById( R.id.btn_reiniciar );
-        setOnePointView( isPointView );
+        pointViewHub.setVisibility( View.INVISIBLE );
         btn_back.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick( View v ) {
@@ -150,8 +151,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setOnePointView( boolean set ){
         if ( set ){
-            btn_hasi.setVisibility( View.INVISIBLE );
-            btn_atera.setVisibility( View.INVISIBLE );
+            btn_hasi.animate().setDuration( 300 ).translationXBy( 4000 ).start();
+            btn_atera.animate().setDuration( 300 ).translationXBy( -4000 ).start();
             new Handler().postDelayed( new Runnable() {
                 @Override
                 public void run() {
@@ -165,8 +166,8 @@ public class MainActivity extends AppCompatActivity {
             new Handler().postDelayed( new Runnable() {
                 @Override
                 public void run() {
-                    btn_hasi.setVisibility( View.VISIBLE );
-                    btn_atera.setVisibility( View.VISIBLE );
+                    btn_hasi.animate().setDuration( 300 ).translationXBy( -4000 ).start();
+                    btn_atera.animate().setDuration( 300 ).translationXBy( 4000 ).start();
 
                 }
             }, 500 );
