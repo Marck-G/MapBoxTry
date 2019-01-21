@@ -61,9 +61,9 @@ public class MainActivity extends AppCompatActivity {
                         mapboxMap.addMarker( p );
                         mapboxMap.addMarker( eliza );
                         mapboxMap.addMarker( new MarkerOptions().position( Places.TREN )
-                            .setIcon( IconFactory.getInstance( MainActivity.this ).fromResource( R.mipmap.ic_marker_x ) )).setTitle( "Tren Geltokia" );
+                            .setIcon( IconFactory.getInstance( MainActivity.this ).fromResource( R.mipmap.ic_marker_x ) ));
                         mapboxMap.addMarker( new MarkerOptions().position( Places.ST_CRUZ )
-                                .setIcon( IconFactory.getInstance( MainActivity.this ).fromResource(  R.mipmap.ic_marker_x  ))).setTitle( "Santa Cruz" );
+                                .setIcon( IconFactory.getInstance( MainActivity.this ).fromResource(  R.mipmap.ic_marker_x  )));
                         mapboxMap.addMarker( new MarkerOptions().position( Places.ZERAMIKA )
                                 .setIcon( IconFactory.getInstance( MainActivity.this ).fromResource(  R.mipmap.ic_marker_x  )));
                         mapboxMap.addMarker( new MarkerOptions().position( Places.JAUREGIA )
