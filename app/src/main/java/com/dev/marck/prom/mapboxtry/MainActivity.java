@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     pointViewHub.setVisibility( View.VISIBLE );
-                    pointViewHub.animate().setDuration( 300 ).translationYBy( 10 ).start();
+                    pointViewHub.animate().setDuration( 300 ).translationYBy( -10 ).start();
                 }
             }, 500 );
 
