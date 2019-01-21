@@ -151,13 +151,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void setOnePointView( boolean set ){
         if ( set ){
-            btn_hasi.animate().setDuration( 300 ).translationXBy( 4000 ).start();
-            btn_atera.animate().setDuration( 300 ).translationXBy( -4000 ).start();
+            btn_hasi.setVisibility( View.INVISIBLE );
+            btn_atera.setVisibility( View.INVISIBLE );
             new Handler().postDelayed( new Runnable() {
                 @Override
                 public void run() {
-
                     pointViewHub.setVisibility( View.VISIBLE );
+                    pointViewHub.animate().setDuration( 300 ).translationYBy( 10 ).start();
                 }
             }, 500 );
 
@@ -166,8 +166,8 @@ public class MainActivity extends AppCompatActivity {
             new Handler().postDelayed( new Runnable() {
                 @Override
                 public void run() {
-                    btn_hasi.animate().setDuration( 300 ).translationXBy( -4000 ).start();
-                    btn_atera.animate().setDuration( 300 ).translationXBy( 4000 ).start();
+                    btn_hasi.setVisibility( View.VISIBLE );
+                    btn_atera.setVisibility( View.VISIBLE );
 
                 }
             }, 500 );
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
             public void onMapReady( @NonNull MapboxMap mapboxMap ) {
                 CameraPosition position = new CameraPosition.Builder()
                         .target( pos )
-                        .zoom( 16 )
+                        .zoom( 19 )
                         .build();
                 mapboxMap.animateCamera( CameraUpdateFactory.newCameraPosition( position ),500 );
             }
