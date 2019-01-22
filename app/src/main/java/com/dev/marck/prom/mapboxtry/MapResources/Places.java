@@ -33,4 +33,27 @@ public class Places {
         else
             return "Llodio";
     }
+
+    public static LatLng getPlace( int id ){
+        switch ( id ){
+            case 1:
+                return Places.IKASTOLA;
+            case 2:
+                return Places.ELIZA;
+            case 3:
+                return Places.TREN;
+            case 4:
+                return Places.ST_CRUZ;
+            case 5:
+                return Places.ZERAMIKA;
+            case 6:
+                return Places.JAUREGIA;
+            case 7:
+                return Places.PARKE;
+            case 8:
+                return Places.DORRETXEA;
+            default:
+                return null;
+        }
+    }
 }
