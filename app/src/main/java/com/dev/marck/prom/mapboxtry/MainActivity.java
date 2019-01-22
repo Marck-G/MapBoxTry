@@ -1,5 +1,6 @@
 package com.dev.marck.prom.mapboxtry;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -142,6 +143,8 @@ public class MainActivity extends AppCompatActivity {
     private void reiniciar(){
 //        TODO: crear una nueva partida, se inicia desde cero
 //        Intent --> primera actividad
+        Intent i = new Intent( MainActivity.this, SecondActivity.class );
+        startActivity( i );
     }
 
     private void continuar(){
