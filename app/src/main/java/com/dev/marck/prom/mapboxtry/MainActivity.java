@@ -6,11 +6,13 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dev.marck.prom.mapboxtry.MapResources.DBConectionObject;
 import com.dev.marck.prom.mapboxtry.MapResources.Places;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.IconFactory;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout pointViewHub;
     private boolean isPointView = false;
     private ImageView btn_back;
+    private  DBConectionObject db;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -78,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
+
         title = findViewById( R.id.main_title );
         pointViewHub = findViewById( R.id.point_view_controllers );
         btn_hasi = findViewById( R.id.btn_jaraitu );
@@ -86,6 +90,28 @@ public class MainActivity extends AppCompatActivity {
         btn_continuar = findViewById( R.id.btn_continuar );
         btn_reiniciar = findViewById( R.id.btn_reiniciar );
         pointViewHub.setVisibility( View.INVISIBLE );
+
+        TextView next = findViewById( R.id.nextPoint );
+        TextView previous = findViewById( R.id.previousPoint );
+
+        next.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
+                nextPoint();
+            }
+        } );
+
+        previous.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
+                previousPoint();
+            }
+        } );
+
+//        DATABASE
+        db = new DBConectionObject( this, "app",null, 1 );
+        db.updateLastPoint( 0 );
+
         btn_back.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick( View v ) {
@@ -118,7 +144,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick( View v ) {
                 setOnePointView( true );
-                viewPoint( Places.DORRETXEA );
+                LatLng last = db.getLastPoint();
+                if ( last != null )
+                    viewPoint(last );
+                else
+                    Log.e( "Error location", "No encontrado ultimo punto" );
             }
         } );
         restoreCamera();
@@ -152,6 +182,21 @@ public class MainActivity extends AppCompatActivity {
 //        intent --> ActivityManager.init( int id )
     }
 
+    private void nextPoint(){
+        setOnePointView( true );
+        int actual = Places.getId( db.getLastPoint() );
+        db.updateLastPoint( actual++ );
+        viewPoint( Places.getPlace( actual++ ) );
+
+    }
+    private void previousPoint(){
+        setOnePointView( true );
+        int actual = Places.getId( db.getLastPoint() );
+        db.updateLastPoint( actual-- );
+        viewPoint( Places.getPlace( actual-- ) );
+
+    }
+
     private void setOnePointView( boolean set ){
         if ( set ){
             btn_hasi.setVisibility( View.INVISIBLE );
@@ -160,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     pointViewHub.setVisibility( View.VISIBLE );
-                    pointViewHub.animate().setDuration( 300 ).translationYBy( -10 ).start();
+                    pointViewHub.animate().setDuration( 300 ).translationY( -10 ).start();
                 }
             }, 500 );
 
