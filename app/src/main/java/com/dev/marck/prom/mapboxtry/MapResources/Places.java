@@ -34,6 +34,26 @@ public class Places {
             return "Llodio";
     }
 
+    public static int getId( LatLng place){
+        if( place == Places.IKASTOLA )
+            return 1;
+        if( place == Places.ELIZA )
+            return 2;
+        if( place == Places.TREN )
+            return 3;
+        if( place == Places.ST_CRUZ )
+            return 4;
+        if( place == Places.ZERAMIKA )
+            return 5;
+        if( place == Places.JAUREGIA )
+            return 6;
+        if( place == Places.PARKE )
+            return 7;
+        if( place == Places.DORRETXEA )
+            return 8;
+        return 0;
+    }
+
     public static LatLng getPlace( int id ){
         switch ( id ){
             case 1:
