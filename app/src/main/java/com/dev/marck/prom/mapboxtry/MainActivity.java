@@ -26,6 +26,7 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int MAP_TIME = 700;
 //    mapa de mapbox
     private MapView mapView;
     private ConstraintLayout btn_hasi;
@@ -110,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
 
 //        DATABASE
         db = new DBConectionObject( this, "app",null, 1 );
-        db.updateLastPoint( 0 );
 
         btn_back.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                         .tilt( 0 )
                         .bearing( 0 )
                         .build();
-                mapboxMap.animateCamera( CameraUpdateFactory.newCameraPosition( position ),500 );
+                mapboxMap.animateCamera( CameraUpdateFactory.newCameraPosition( position ), MAP_TIME );
             }
         } );
     }
@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                     pointViewHub.setVisibility( View.VISIBLE );
                     pointViewHub.animate().setDuration( 300 ).translationY( -10 ).start();
                 }
-            }, 500 );
+            }, MAP_TIME );
 
         } else {
             pointViewHub.setVisibility( View.INVISIBLE );

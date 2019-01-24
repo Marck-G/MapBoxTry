@@ -11,6 +11,7 @@ import org.xml.sax.SAXException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -18,7 +19,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 public class XMLRecovery {
     private static final XMLRecovery instance = new XMLRecovery();
-    private String file = null;
+    private InputStream file = null;
     private Document doc = null;
 
     public static XMLRecovery getInstance(){
@@ -28,7 +29,7 @@ public class XMLRecovery {
     private XMLRecovery(){
     }
 
-    public XMLRecovery setFile( String file ){
+    public XMLRecovery setFile( InputStream file ){
         this.file = file;
         return this;
     }
@@ -44,6 +45,7 @@ public class XMLRecovery {
             Node element = elemst.item( 0 );
 //            recuperamos el id
             String idstr = element.getAttributes().getNamedItem( "id" ).getTextContent();
+            Log.e( "POS", idstr );
             try {
                 int id = Integer.parseInt( idstr.trim().substring( 0,1 ) );
                 return Places.getPlace( id++ );
